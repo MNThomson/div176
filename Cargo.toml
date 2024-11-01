@@ -1,0 +1,14 @@
+cargo-features = ["profile-rustflags", "codegen-backend"]
+
+[workspace]
+resolver = "2"
+members = []
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+
+[profile.dev-fast]
+inherits = "dev"
+codegen-backend = "cranelift"
+rustflags = ["-C", "link-arg=-fuse-ld=mold"]
