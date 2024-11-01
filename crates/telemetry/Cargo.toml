@@ -6,3 +6,6 @@ edition = "2021"
 [dependencies]
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing = { version = "0.1", features = ["attributes"] }
+axum = "0.7.7"
+http = "1.1.0"
+tower-http = { version = "0.6.1", features = ["trace"] }
