@@ -2,7 +2,10 @@ cargo-features = ["profile-rustflags", "codegen-backend"]
 
 [workspace]
 resolver = "2"
-members = ["div176"]
+members = [
+    "div176",
+    "crates/*"
+]
 
 [profile.release]
 codegen-units = 1
