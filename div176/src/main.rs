@@ -3,7 +3,7 @@ use telemetry::{info, otel_tracing, tracing_init};
 
 #[tokio::main]
 async fn main() {
-    tracing_init(env!("CARGO_PKG_NAME"));
+    tracing_init(env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
 
     let app = Router::new()
         .route("/", get("div176"))
