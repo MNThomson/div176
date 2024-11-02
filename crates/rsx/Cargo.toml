@@ -1,0 +1,9 @@
+[package]
+name = "rsx"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+hypertext = { version = "0.5", features = ["axum"] }
+axum = "0.7"
+http = "1.1"

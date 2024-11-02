@@ -4,6 +4,8 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
+telemetry = { path = "../crates/telemetry/" }
+rsx = { path = "../crates/rsx/" }
+
 axum = "0.7"
 tokio = { version = "1.41", features = ["full"] }
-telemetry = { path = "../crates/telemetry/" }
