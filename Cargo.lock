@@ -269,10 +269,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "22ec99545bb0ed0ea7bb9b8e1e9122ea386ff8a48c0922e43f36d45ab09e0e80"
 
 [[package]]
+name = "db"
+version = "0.0.0"
+
+[[package]]
 name = "div176"
 version = "0.0.0"
 dependencies = [
  "axum 0.7.7",
+ "db",
  "rsx",
  "telemetry",
  "tokio",
