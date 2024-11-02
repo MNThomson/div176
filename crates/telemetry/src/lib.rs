@@ -5,7 +5,11 @@ use gethostname::gethostname;
 use http::{header, Request, Version};
 use opentelemetry::{trace::SpanKind, KeyValue};
 use opentelemetry_otlp::WithExportConfig;
-use opentelemetry_sdk::{runtime, trace as sdktrace, Resource};
+use opentelemetry_sdk::{
+    runtime,
+    trace::{self as sdktrace, BatchConfig},
+    Resource,
+};
 use rustc_version::version;
 use tonic::metadata::MetadataMap;
 use tower_http::{
@@ -47,6 +51,11 @@ pub fn tracing_init(service_name: &str, service_version: &str) {
                             .tonic()
                             .with_endpoint("https://api.honeycomb.io:443")
                             .with_metadata(headers),
+                    )
+                    .with_batch_config(
+                        BatchConfig::default()
+                            .with_max_queue_size(65_536)
+                            .with_max_concurrent_exports(4),
                     )
                     .with_trace_config(sdktrace::config().with_resource(Resource::new(vec![
                         KeyValue::new("service.name", service_name.to_string()),
