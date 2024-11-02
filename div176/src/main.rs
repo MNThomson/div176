@@ -3,11 +3,12 @@ use telemetry::{info, otel_tracing, tracing_init};
 
 #[tokio::main]
 async fn main() {
-    tracing_init();
+    tracing_init(env!("CARGO_PKG_NAME"));
 
     let app = Router::new()
         .route("/", get("div176"))
-        .layer(otel_tracing());
+        .layer(otel_tracing())
+        .route("/health", get(|| async {}));
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
