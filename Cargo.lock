@@ -271,6 +271,9 @@ checksum = "22ec99545bb0ed0ea7bb9b8e1e9122ea386ff8a48c0922e43f36d45ab09e0e80"
 [[package]]
 name = "db"
 version = "0.0.0"
+dependencies = [
+ "unreachable_macro",
+]
 
 [[package]]
 name = "div176"
@@ -1727,6 +1730,15 @@ name = "unicode-ident"
 version = "1.0.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e91b56cd4cadaeb79bbf1a5645f6b4f8dc5bde8834ad5894a8db35fda9efa1fe"
+
+[[package]]
+name = "unreachable_macro"
+version = "0.0.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.86",
+]
 
 [[package]]
 name = "untrusted"
