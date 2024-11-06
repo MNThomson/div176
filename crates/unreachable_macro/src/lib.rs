@@ -4,10 +4,6 @@ use syn::{parse_macro_input, ItemTrait, TraitItem, TraitItemFn};
 
 #[proc_macro_attribute]
 pub fn with_unreachable_defaults(_attr: TokenStream, item: TokenStream) -> TokenStream {
-    if !cfg!(test) {
-        return item;
-    }
-
     let input = parse_macro_input!(item as ItemTrait);
 
     let trait_name = &input.ident;
