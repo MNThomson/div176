@@ -13,7 +13,7 @@ jobs:
       - uses: "./.github/actions/setup-rust-env"
       - run: cargo clippy --all-targets --all-features
         env:
-            RUSTFLAGS="-Dwarnings"
+          RUSTFLAGS: "-Dwarnings"
 
   rustfmt:
     runs-on: ubuntu-latest
