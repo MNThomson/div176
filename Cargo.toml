@@ -8,6 +8,11 @@ members = [
 ]
 default-members = ["div176"]
 
+[workspace.dependencies]
+axum = { version = "0.7" }
+tokio = { version = "1.41", features = ["full"] }
+anyhow = { version = "1.0.92" }
+
 [profile.release]
 codegen-units = 1
 lto = "fat"

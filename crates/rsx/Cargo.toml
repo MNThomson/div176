@@ -5,5 +5,5 @@ edition = "2021"
 
 [dependencies]
 hypertext = { version = "0.5", features = ["axum"] }
-axum = "0.7"
+axum = { workspace = true }
 http = "1.1"

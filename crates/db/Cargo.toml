@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-anyhow = "1.0.92"
+anyhow = { workspace = true }
 sqlx = { version = "0.8", features = [ "sqlite", "macros", "chrono", "runtime-tokio" ] }
 
 unreachable_macro = { path = "../unreachable_macro/" }
