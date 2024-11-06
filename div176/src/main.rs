@@ -1,7 +1,8 @@
-use axum::{extract::State, response::IntoResponse, routing::get, Router};
+use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::get, Router};
 use db::{Database, DB};
 use rsx::*;
 use telemetry::{info, otel_tracing, tracing_init};
+extern crate rsx as hypertext;
 
 #[derive(Clone)]
 struct AppState {
@@ -29,8 +30,10 @@ async fn main() {
 }
 
 async fn healthcheck(State(state): State<AppState>) -> impl IntoResponse {
-    if state.db.healthcheck().is_err() {
-        return rsx!(<p>database: unhealthy</p>).render();
-    }
-    rsx!(<p>database: healthy</p>).render()
+    let health = state.db.healthcheck().map_or("unhealthy", |_| "healthy");
+    let statuscode = state
+        .db
+        .healthcheck()
+        .map_or(StatusCode::INTERNAL_SERVER_ERROR, |_| StatusCode::OK);
+    (statuscode, rsx!(<p>database: {health}</p>).render())
 }
