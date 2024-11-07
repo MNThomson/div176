@@ -130,9 +130,6 @@ impl<B> MakeSpan<B> for OtelMakeSpan {
             "otel.kind" = format!("{:?}", SpanKind::Server),
             "http.request.method" = ?request.method(),
             "http.route" = matched_route,
-            "url.path" = request.uri().path(),
-            "url.query" = request.uri().query(),
-            "user_agent.original" = request.headers().get(header::USER_AGENT).and_then(|val| val.to_str().ok()),
             "http.flavor" = match request.version() {
                 Version::HTTP_09 => "0.9",
                 Version::HTTP_10 => "1.0",
@@ -143,6 +140,11 @@ impl<B> MakeSpan<B> for OtelMakeSpan {
             },
             "http.request.content_length" = request.headers().get(header::CONTENT_LENGTH).and_then(|val| val.to_str().ok()),
             "http.response.status_code" = tracing::field::Empty,
+            "http.host" = request.headers() .get(header::HOST).map_or("", |h| h.to_str().unwrap_or("")),
+            "url.path" = request.uri().path(),
+            "url.query" = request.uri().query(),
+            "url.scheme" = request.uri().scheme().map_or("http".to_string(), |s| s.to_string()),
+            "user_agent.original" = request.headers().get(header::USER_AGENT).map_or("", |h| h.to_str().unwrap_or("")),
             "error.type" = tracing::field::Empty,
         )
     }
