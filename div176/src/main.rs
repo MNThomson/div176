@@ -11,7 +11,7 @@ struct AppState {
 
 #[tokio::main]
 async fn main() {
-    tracing_init(env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+    tracing_init(env!("CARGO_PKG_NAME"), env!("GIT_HASH"));
 
     let state = AppState {
         db: DB::init().await.unwrap(),
@@ -21,6 +21,7 @@ async fn main() {
         .route("/", get(rsx!(<h1>div176</h1>).render()))
         .layer(otel_tracing())
         .route("/health", get(healthcheck))
+        .route("/version", get(|| async { env!("GIT_HASH") }))
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")

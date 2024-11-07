@@ -20,6 +20,8 @@ use tracing::Span;
 pub use tracing::{debug, error, info, trace, warn};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
+const QUEUE_SIZE: usize = 65_536;
+
 pub fn tracing_init(service_name: &str, service_version: &str) {
     #[cfg(debug_assertions)]
     let apikey = std::env::var("HONEYCOMB_APIKEY").unwrap_or("".to_string());
@@ -54,8 +56,9 @@ pub fn tracing_init(service_name: &str, service_version: &str) {
                     )
                     .with_batch_config(
                         BatchConfig::default()
-                            .with_max_queue_size(65_536)
-                            .with_max_concurrent_exports(4),
+                            .with_max_queue_size(QUEUE_SIZE)
+                            .with_max_concurrent_exports(2)
+                            .with_max_export_timeout(Duration::from_secs(5)),
                     )
                     .with_trace_config(sdktrace::config().with_resource(Resource::new(vec![
                         KeyValue::new("service.name", service_name.to_string()),
