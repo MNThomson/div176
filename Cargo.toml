@@ -8,6 +8,13 @@ members = [
 ]
 default-members = ["div176"]
 
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+authors = ["MNThomson"]
+license = "AGPLv3"
+repository = "https://github.com/MNThomson/div176"
+
 [workspace.dependencies]
 axum = { version = "0.7" }
 tokio = { version = "1.41", features = ["full"] }
