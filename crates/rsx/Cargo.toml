@@ -8,6 +8,6 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
-hypertext = { version = "0.5", features = ["axum"] }
-axum = { workspace = true }
+axum.workspace = true
 http = "1.1"
+hypertext = { version = "0.5", features = ["axum"] }

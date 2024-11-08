@@ -8,7 +8,7 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
-anyhow = { workspace = true }
+anyhow.workspace = true
 sqlx = { version = "0.8", features = [ "sqlite", "macros", "chrono", "runtime-tokio" ] }
 
 unreachable_macro = { path = "../unreachable_macro/" }

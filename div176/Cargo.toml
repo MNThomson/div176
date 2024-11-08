@@ -12,5 +12,5 @@ db = { path = "../crates/db/" }
 rsx = { path = "../crates/rsx/" }
 telemetry = { path = "../crates/telemetry/" }
 
-axum = { workspace = true }
-tokio = { workspace = true }
+axum.workspace = true
+tokio.workspace = true
