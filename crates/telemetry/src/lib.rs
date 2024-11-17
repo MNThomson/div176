@@ -130,8 +130,8 @@ impl<B> MakeSpan<B> for OtelMakeSpan {
             "http_request",
             "otel.name" = format!("{} {}", request.method(), matched_route.unwrap_or("UnknownRoute")),
             "otel.kind" = format!("{:?}", SpanKind::Server),
-            "http.request.method" = ?request.method(),
-            "http.route" = matched_route,
+            "error.type" = tracing::field::Empty,
+
             "http.flavor" = match request.version() {
                 Version::HTTP_09 => "0.9",
                 Version::HTTP_10 => "1.0",
@@ -140,14 +140,16 @@ impl<B> MakeSpan<B> for OtelMakeSpan {
                 Version::HTTP_3 => "3.0",
                 _ => "Unknown",
             },
-            "http.request.content_length" = request.headers().get(header::CONTENT_LENGTH).and_then(|val| val.to_str().ok()),
-            "http.response.status_code" = tracing::field::Empty,
             "http.host" = request.headers() .get(header::HOST).map_or("", |h| h.to_str().unwrap_or("")),
+            "http.request.content_length" = request.headers().get(header::CONTENT_LENGTH).and_then(|val| val.to_str().ok()),
+            "http.request.method" = ?request.method(),
+            "http.response.status_code" = tracing::field::Empty,
+            "http.route" = matched_route,
+
             "url.path" = request.uri().path(),
             "url.query" = request.uri().query(),
             "url.scheme" = request.uri().scheme().map_or("http".to_string(), |s| s.to_string()),
             "user_agent.original" = request.headers().get(header::USER_AGENT).map_or("", |h| h.to_str().unwrap_or("")),
-            "error.type" = tracing::field::Empty,
         )
     }
 }
