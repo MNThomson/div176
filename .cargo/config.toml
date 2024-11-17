@@ -1,5 +1,5 @@
 [alias]
+c = ["watch", "-c", "-x", "clippy --all-targets"]
 r = ["watch", "-c", "-x", "run --profile dev-fast"]
 rr = ["watch", "-c", "-x", "run --release"]
 t = "nextest run"
-c = ["watch", "-c", "-x", "clippy --all-targets"]

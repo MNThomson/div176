@@ -1,11 +1,11 @@
 [package]
 name = "telemetry"
 
-version.workspace = true
-edition.workspace = true
 authors.workspace = true
+edition.workspace = true
 license.workspace = true
 repository.workspace = true
+version.workspace = true
 
 [dependencies]
 axum.workspace = true
@@ -15,7 +15,7 @@ rustc_version = "0.4"
 tower-http = { version = "0.6", features = ["trace"] }
 
 opentelemetry = { version = "0.21", features = ["metrics"] }
-opentelemetry-otlp = { version = "0.14", features = ["tonic", "metrics", "tls-roots"] }
+opentelemetry-otlp = { version = "0.14", features = ["metrics", "tls-roots", "tonic"] }
 opentelemetry_sdk = { version = "0.21", features = ["rt-tokio"] }
 tonic = "0.9"
 tracing = { version = "0.1", features = ["attributes"] }

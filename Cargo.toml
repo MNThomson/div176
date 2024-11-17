@@ -1,30 +1,27 @@
-cargo-features = ["profile-rustflags", "codegen-backend"]
+cargo-features = ["codegen-backend", "profile-rustflags"]
 
 [workspace]
-resolver = "2"
-members = [
-    "div176",
-    "crates/*"
-]
 default-members = ["div176"]
+members = ["crates/*", "div176"]
+resolver = "2"
 
 [workspace.package]
-version = "0.0.0"
-edition = "2021"
 authors = ["MNThomson"]
+edition = "2021"
 license = "AGPLv3"
 repository = "https://github.com/MNThomson/div176"
+version = "0.0.0"
 
 [workspace.dependencies]
+anyhow = { version = "1.0.92" }
 axum = { version = "0.7" }
 tokio = { version = "1.41", features = ["full"] }
-anyhow = { version = "1.0.92" }
 
 [profile.release]
 codegen-units = 1
 lto = "fat"
 
 [profile.dev-fast]
-inherits = "dev"
 codegen-backend = "cranelift"
+inherits = "dev"
 rustflags = ["-C", "link-arg=-fuse-ld=mold"]
