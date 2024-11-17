@@ -22,6 +22,18 @@ jobs:
       - uses: "./.github/actions/setup-rust-env"
       - run: cargo fmt --check
 
+  tomlfmt:
+    runs-on: ubuntu-latest
+    env:
+      TAPLO_VERSION: 0.9.3
+    steps:
+      - uses: actions/checkout@v4
+      - run: >
+          curl -fsSL "https://github.com/tamasfe/taplo/releases/download/${TAPLO_VERSION}/taplo-full-linux-x86_64.gz"
+          | gzip -d -
+          | install -m 755 /dev/stdin /usr/local/bin/taplo
+      - run: taplo format --check
+
   test:
     runs-on: ubuntu-latest
     steps:

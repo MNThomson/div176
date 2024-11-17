@@ -410,7 +410,6 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "sqlx",
- "telemetry",
  "unreachable_macro",
 ]
 
