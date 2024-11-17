@@ -1,4 +1,4 @@
-use std::time::Duration;
+use std::{env, time::Duration};
 
 use axum::{extract::MatchedPath, response::Response};
 use gethostname::gethostname;
@@ -23,11 +23,10 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 const QUEUE_SIZE: usize = 65_536;
 
 pub fn tracing_init(service_name: &str, service_version: &str) {
-    #[cfg(debug_assertions)]
-    let apikey = std::env::var("HONEYCOMB_APIKEY").unwrap_or("".to_string());
-
     #[cfg(not(debug_assertions))]
-    let apikey = std::env::var("HONEYCOMB_APIKEY").expect("HONEYCOMB_APIKEY not set");
+    env::var("HONEYCOMB_APIKEY").expect("HONEYCOMB_APIKEY not set");
+
+    let apikey = env::var("HONEYCOMB_APIKEY").unwrap_or("".to_string());
 
     let mut headers = MetadataMap::new();
     headers.insert("x-honeycomb-team", apikey.parse().unwrap());
