@@ -1,21 +1,22 @@
 use std::any::Any;
 
-mod r#static;
 use axum::{
+    Router,
     body::Body,
     extract::State,
     http::{Response, StatusCode},
     response::IntoResponse,
     routing::get,
-    Router,
 };
 use components::Layout;
-use db::{Database, DB};
+use db::{DB, Database};
 use hypertext::*;
 use r#static::static_handler;
 use telemetry::{otel_tracing, tracing_init};
 use tower_http::catch_panic::CatchPanicLayer;
 use tracing::{error, info};
+
+mod r#static;
 
 #[derive(Clone)]
 struct AppState {
