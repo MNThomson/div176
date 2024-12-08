@@ -316,6 +316,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "components"
+version = "0.0.0"
+dependencies = [
+ "hypertext 0.0.0",
+]
+
+[[package]]
 name = "concurrent-queue"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -441,6 +448,7 @@ name = "div176"
 version = "0.0.0"
 dependencies = [
  "axum 0.7.7",
+ "components",
  "db",
  "hypertext 0.0.0",
  "telemetry",
@@ -908,14 +916,14 @@ version = "0.0.0"
 dependencies = [
  "axum 0.7.7",
  "http 1.1.0",
- "hypertext 0.5.1",
+ "hypertext 0.5.2",
 ]
 
 [[package]]
 name = "hypertext"
-version = "0.5.1"
+version = "0.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d15403549f1569aed8d0123f6fe060f96e5688e55a2c284959db74930e5c27d"
+checksum = "6a7fbcbde3d68ea33abb5c41f6e1d499d6e75d2f2c4485aeacf5dbadd489f8d6"
 dependencies = [
  "axum-core 0.4.5",
  "html-escape",

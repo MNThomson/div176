@@ -1,4 +1,5 @@
 use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::get, Router};
+use components::Layout;
 use db::{Database, DB};
 use hypertext::*;
 use telemetry::{info, otel_tracing, tracing_init};
@@ -17,7 +18,7 @@ async fn main() {
     };
 
     let app = Router::new()
-        .route("/", get(rsx!(<h1>div176</h1>).render()))
+        .route("/", get(Layout(rsx!(<h1>div176</h1>)).render()))
         .layer(otel_tracing())
         .route("/health", get(healthcheck))
         .route("/version", get(|| async { env!("GIT_HASH") }))
