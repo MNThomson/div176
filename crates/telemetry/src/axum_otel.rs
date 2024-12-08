@@ -1,13 +1,13 @@
 use std::time::Duration;
 
 use axum::{extract::MatchedPath, response::Response};
-use http::{header, Request, Version};
+use http::{Request, Version, header};
 use opentelemetry::trace::SpanKind;
 use tower_http::{
     classify::{ServerErrorsAsFailures, ServerErrorsFailureClass, SharedClassifier},
     trace::{MakeSpan, OnBodyChunk, OnEos, OnFailure, OnRequest, OnResponse, TraceLayer},
 };
-use tracing::{debug, Span};
+use tracing::{Span, debug};
 
 pub fn otel_tracing() -> TraceLayer<
     SharedClassifier<ServerErrorsAsFailures>,

@@ -4,9 +4,8 @@ use gethostname::gethostname;
 use opentelemetry::KeyValue;
 use opentelemetry_otlp::WithExportConfig;
 use opentelemetry_sdk::{
-    runtime,
+    Resource, runtime,
     trace::{self as sdktrace, BatchConfig},
-    Resource,
 };
 use rustc_version::version;
 use tonic::metadata::MetadataMap;

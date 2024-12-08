@@ -11,3 +11,6 @@ version.workspace = true
 axum.workspace = true
 http = "1.1"
 hypertext = { version = "0.5.2", features = ["axum"] }
+
+[dev-dependencies]
+pretty_assertions.workspace = true

@@ -1,5 +1,5 @@
 use axum::{
-    http::{header, StatusCode, Uri},
+    http::{StatusCode, Uri, header},
     response::IntoResponse,
 };
 use mime_guess::from_path;
