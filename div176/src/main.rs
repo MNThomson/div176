@@ -1,7 +1,6 @@
 use std::any::Any;
 
 mod r#static;
-use r#static::static_handler;
 use axum::{
     body::Body,
     extract::State,
@@ -13,9 +12,10 @@ use axum::{
 use components::Layout;
 use db::{Database, DB};
 use hypertext::*;
+use r#static::static_handler;
 use telemetry::{otel_tracing, tracing_init};
-use tracing::{error, info};
 use tower_http::catch_panic::CatchPanicLayer;
+use tracing::{error, info};
 
 #[derive(Clone)]
 struct AppState {

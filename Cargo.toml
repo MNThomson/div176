@@ -7,7 +7,7 @@ resolver = "2"
 
 [workspace.package]
 authors = ["MNThomson"]
-edition = "2021"
+edition = "2024"
 license = "AGPLv3"
 repository = "https://github.com/MNThomson/div176"
 version = "0.0.0"
