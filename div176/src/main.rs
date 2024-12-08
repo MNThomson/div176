@@ -1,8 +1,7 @@
 use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::get, Router};
 use db::{Database, DB};
-use rsx::*;
+use hypertext::*;
 use telemetry::{info, otel_tracing, tracing_init};
-extern crate rsx as hypertext;
 
 #[derive(Clone)]
 struct AppState {

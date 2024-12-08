@@ -442,7 +442,7 @@ version = "0.0.0"
 dependencies = [
  "axum 0.7.7",
  "db",
- "rsx",
+ "hypertext 0.0.0",
  "telemetry",
  "tokio",
 ]
@@ -900,6 +900,15 @@ dependencies = [
  "pin-project-lite",
  "tokio",
  "tower-service",
+]
+
+[[package]]
+name = "hypertext"
+version = "0.0.0"
+dependencies = [
+ "axum 0.7.7",
+ "http 1.1.0",
+ "hypertext 0.5.1",
 ]
 
 [[package]]
@@ -1630,15 +1639,6 @@ dependencies = [
  "syn 2.0.86",
  "syn_derive",
  "thiserror",
-]
-
-[[package]]
-name = "rsx"
-version = "0.0.0"
-dependencies = [
- "axum 0.7.7",
- "http 1.1.0",
- "hypertext",
 ]
 
 [[package]]

@@ -9,7 +9,7 @@ version.workspace = true
 
 [dependencies]
 db = { path = "../crates/db/" }
-rsx = { path = "../crates/rsx/" }
+hypertext = { path = "../crates/hypertext/" }
 telemetry = { path = "../crates/telemetry/" }
 
 axum.workspace = true
