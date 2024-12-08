@@ -10,6 +10,7 @@ use rust_embed::Embed;
 #[prefix = "/static/"]
 struct Asset;
 
+#[tracing::instrument]
 pub async fn static_handler(uri: Uri) -> impl IntoResponse {
     let path = uri.path();
 

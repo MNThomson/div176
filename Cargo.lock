@@ -456,6 +456,7 @@ dependencies = [
  "telemetry",
  "tokio",
  "tower-http",
+ "tracing",
 ]
 
 [[package]]

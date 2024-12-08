@@ -18,6 +18,6 @@ opentelemetry = { version = "0.21", features = ["metrics"] }
 opentelemetry-otlp = { version = "0.14", features = ["metrics", "tls-roots", "tonic"] }
 opentelemetry_sdk = { version = "0.21", features = ["rt-tokio"] }
 tonic = "0.9"
-tracing = { version = "0.1", features = ["attributes"] }
+tracing.workspace = true
 tracing-opentelemetry = { version = "0.22" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }

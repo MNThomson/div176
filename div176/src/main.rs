@@ -13,7 +13,8 @@ use axum::{
 use components::Layout;
 use db::{Database, DB};
 use hypertext::*;
-use telemetry::{error, info, otel_tracing, tracing_init};
+use telemetry::{otel_tracing, tracing_init};
+use tracing::{error, info};
 use tower_http::catch_panic::CatchPanicLayer;
 
 #[derive(Clone)]

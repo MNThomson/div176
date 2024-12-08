@@ -7,9 +7,7 @@ use tower_http::{
     classify::{ServerErrorsAsFailures, ServerErrorsFailureClass, SharedClassifier},
     trace::{MakeSpan, OnBodyChunk, OnEos, OnFailure, OnRequest, OnResponse, TraceLayer},
 };
-use tracing::Span;
-
-use crate::debug;
+use tracing::{debug, Span};
 
 pub fn otel_tracing() -> TraceLayer<
     SharedClassifier<ServerErrorsAsFailures>,

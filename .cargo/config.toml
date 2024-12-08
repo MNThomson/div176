@@ -1,6 +1,6 @@
 [alias]
 c = ["watch", "-c", "-x", "clippy --all-targets"]
 r = ["watch", "--env-file", ".env", "-c", "-x", "run --profile dev-fast"]
-rs = ["watch", "--env-file", ".env", "-c", "-x", "run"]
 rr = ["watch", "--env-file", ".env", "-c", "-x", "run --release"]
+rs = ["watch", "--env-file", ".env", "-c", "-x", "run"]
 t = "nextest run"
