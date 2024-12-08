@@ -16,3 +16,6 @@ telemetry = { path = "../crates/telemetry/" }
 axum.workspace = true
 tokio.workspace = true
 tower-http.workspace = true
+
+rust-embed.version = "8.5.0"
+mime_guess.version = "2.0.5"

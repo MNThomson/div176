@@ -1,5 +1,7 @@
 use std::any::Any;
 
+mod r#static;
+use r#static::static_handler;
 use axum::{
     body::Body,
     extract::State,
@@ -29,6 +31,7 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(Layout(rsx!(<h1>div176</h1>)).render()))
+        .route("/static/*file", get(static_handler))
         .layer(otel_tracing())
         .route("/health", get(healthcheck))
         .route("/version", get(|| async { env!("GIT_HASH") }))
