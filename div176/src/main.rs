@@ -1,8 +1,18 @@
-use axum::{extract::State, http::StatusCode, response::IntoResponse, routing::get, Router};
+use std::any::Any;
+
+use axum::{
+    body::Body,
+    extract::State,
+    http::{Response, StatusCode},
+    response::IntoResponse,
+    routing::get,
+    Router,
+};
 use components::Layout;
 use db::{Database, DB};
 use hypertext::*;
-use telemetry::{info, otel_tracing, tracing_init};
+use telemetry::{error, info, otel_tracing, tracing_init};
+use tower_http::catch_panic::CatchPanicLayer;
 
 #[derive(Clone)]
 struct AppState {
@@ -22,7 +32,8 @@ async fn main() {
         .layer(otel_tracing())
         .route("/health", get(healthcheck))
         .route("/version", get(|| async { env!("GIT_HASH") }))
-        .with_state(state);
+        .with_state(state)
+        .layer(CatchPanicLayer::custom(handle_panic));
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
@@ -42,4 +53,17 @@ async fn healthcheck(State(state): State<AppState>) -> impl IntoResponse {
     };
 
     (statuscode, rsx!(<p>database: {health_status}</p>).render())
+}
+
+fn handle_panic(err: Box<dyn Any + Send + 'static>) -> Response<Body> {
+    let details = if let Some(s) = err.downcast_ref::<String>() {
+        s.clone()
+    } else if let Some(s) = err.downcast_ref::<&str>() {
+        s.to_string()
+    } else {
+        "Unknown panic message".to_string()
+    };
+    error!(details);
+
+    (StatusCode::INTERNAL_SERVER_ERROR).into_response()
 }

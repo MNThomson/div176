@@ -12,7 +12,7 @@ axum.workspace = true
 gethostname = "0.4"
 http = "1.1"
 rustc_version = "0.4"
-tower-http = { version = "0.6", features = ["trace"] }
+tower-http.workspace = true
 
 opentelemetry = { version = "0.21", features = ["metrics"] }
 opentelemetry-otlp = { version = "0.14", features = ["metrics", "tls-roots", "tonic"] }

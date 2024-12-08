@@ -453,6 +453,7 @@ dependencies = [
  "hypertext 0.0.0",
  "telemetry",
  "tokio",
+ "tower-http",
 ]
 
 [[package]]
