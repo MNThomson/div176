@@ -1,10 +1,13 @@
 #![feature(associated_type_defaults)]
 #![allow(async_fn_in_trait)]
 
-use std::{fs::File, time::Duration};
+use std::{
+    fs::{File, remove_file},
+    time::Duration,
+};
 
-use anyhow::{bail, Context, Result};
-use sqlx::{sqlite::SqlitePoolOptions, Sqlite, SqlitePool};
+use anyhow::{Context, Result, bail};
+use sqlx::{Sqlite, SqlitePool, sqlite::SqlitePoolOptions};
 
 pub type DbType = Sqlite;
 pub type DbPool = SqlitePool;
@@ -19,10 +22,15 @@ pub struct DB {
     pool: DbPool,
 }
 
+pub const INIT_SQL: &str = include_str!("../sql/init.sql");
+
 const PATH: &str = "data.db";
 
 impl DB {
     pub async fn init() -> Result<Self> {
+        #[cfg(debug_assertions)]
+        let _ = remove_file(PATH);
+
         File::open(PATH).or_else(|_| File::create(PATH)).unwrap();
         let db = DB {
             pool: SqlitePoolOptions::new()
@@ -32,6 +40,10 @@ impl DB {
                 .await
                 .context("Could not connect to database (with URL)")?,
         };
+
+        #[cfg(debug_assertions)]
+        let _ = sqlx::query(INIT_SQL).execute(&db.pool).await;
+
         Ok(db)
     }
 }
