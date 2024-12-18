@@ -1,0 +1,21 @@
+[package]
+name = "android"
+
+# Tauri doesn't allow workspace overrides
+authors = ["MNThomson"]
+edition = "2021"
+license = "AGPLv3"
+repository = "https://github.com/MNThomson/div176"
+version = "0.0.0"
+
+[lib]
+crate-type = ["cdylib", "rlib", "staticlib"]
+name = "android_lib"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json.version = "1.0.33"
+tauri = { version = "2", features = [] }
