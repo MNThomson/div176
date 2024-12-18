@@ -58,10 +58,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v4
-      - run: uvx zizmor --format sarif . > results.sarif
+      - run: uvx zizmor .github/workflows --min-severity=medium --min-confidence=low
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: results.sarif
-          category: zizmor
