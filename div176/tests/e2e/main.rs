@@ -9,7 +9,7 @@ use common::*;
 async fn tst() -> Result<(), CmdError> {
     let (c, d) = world().await;
 
-    let _ = c.goto("https://example.com").await?;
+    c.goto("https://example.com").await?;
     assert_eq!("Example Domain", c.title().await?);
 
     cleanup(c, d).await
