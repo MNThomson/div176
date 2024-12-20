@@ -1,5 +1,6 @@
 use std::any::Any;
 
+use auth::AuthUser;
 use axum::{
     Router,
     body::Body,
@@ -16,6 +17,7 @@ use telemetry::{otel_tracing, tracing_init};
 use tower_http::catch_panic::CatchPanicLayer;
 use tracing::{error, info};
 
+mod auth;
 mod r#static;
 
 #[derive(Clone)]
@@ -34,6 +36,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(Layout(rsx!(<h1>div176</h1>)).render()))
         .route("/static/*file", get(static_handler))
+        .route("/protected", get(protected))
         .layer(otel_tracing())
         .route("/health", get(healthcheck))
         .route("/version", get(|| async { env!("GIT_HASH") }))
@@ -46,6 +49,10 @@ async fn main() {
 
     info!("listening on {}", listener.local_addr().unwrap());
     axum::serve(listener, app).await.unwrap();
+}
+
+async fn protected(AuthUser(user): AuthUser) -> impl IntoResponse {
+    user.session_token
 }
 
 async fn healthcheck(State(state): State<AppState>) -> impl IntoResponse {

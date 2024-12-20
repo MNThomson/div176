@@ -191,9 +191,9 @@ dependencies = [
 
 [[package]]
 name = "axum"
-version = "0.7.7"
+version = "0.7.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "504e3947307ac8326a5437504c517c4b56716c9d98fac0028c2acc7ca47d70ae"
+checksum = "edca88bc138befd0323b20752846e6587272d3b03b0343c8ea28a6f819e6e71f"
 dependencies = [
  "async-trait",
  "axum-core 0.4.5",
@@ -259,6 +259,30 @@ dependencies = [
  "tower-layer",
  "tower-service",
  "tracing",
+]
+
+[[package]]
+name = "axum-extra"
+version = "0.9.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c794b30c904f0a1c2fb7740f7df7f7972dfaa14ef6f57cb6178dc63e5dca2f04"
+dependencies = [
+ "axum 0.7.9",
+ "axum-core 0.4.5",
+ "bytes",
+ "cookie 0.18.1",
+ "fastrand",
+ "futures-util",
+ "http 1.1.0",
+ "http-body 1.0.1",
+ "http-body-util",
+ "mime",
+ "multer",
+ "pin-project-lite",
+ "serde",
+ "tower 0.5.1",
+ "tower-layer",
+ "tower-service",
 ]
 
 [[package]]
@@ -793,6 +817,7 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "sqlx",
+ "telemetry",
  "unreachable_macro",
 ]
 
@@ -879,7 +904,8 @@ checksum = "bd0c93bb4b0c6d9b77f4435b0ae98c24d17f1c45b2ff844c6151a07256ca923b"
 name = "div176"
 version = "0.0.0"
 dependencies = [
- "axum 0.7.7",
+ "axum 0.7.9",
+ "axum-extra",
  "components",
  "db",
  "fantoccini",
@@ -987,6 +1013,15 @@ name = "embed_plist"
 version = "1.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4ef6b89e5b37196644d8796de5268852ff179b44e96276cf4290264843743bb7"
+
+[[package]]
+name = "encoding_rs"
+version = "0.8.35"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "75030f3c4f45dafd7586dd6780965a8c7e8e285a5ecb86713e63a79c5b2766f3"
+dependencies = [
+ "cfg-if",
+]
 
 [[package]]
 name = "equivalent"
@@ -1849,7 +1884,7 @@ dependencies = [
 name = "hypertext"
 version = "0.0.0"
 dependencies = [
- "axum 0.7.7",
+ "axum 0.7.9",
  "http 1.1.0",
  "hypertext 0.5.2",
  "pretty_assertions",
@@ -2334,6 +2369,23 @@ dependencies = [
  "serde",
  "thiserror 1.0.66",
  "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "multer"
+version = "3.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "83e87776546dc87511aa5ee218730c92b666d7264ab6ed41f9d215af9cd5224b"
+dependencies = [
+ "bytes",
+ "encoding_rs",
+ "futures-util",
+ "http 1.1.0",
+ "httparse",
+ "memchr",
+ "mime",
+ "spin",
+ "version_check",
 ]
 
 [[package]]
@@ -4700,7 +4752,7 @@ dependencies = [
 name = "telemetry"
 version = "0.0.0"
 dependencies = [
- "axum 0.7.7",
+ "axum 0.7.9",
  "gethostname",
  "http 1.1.0",
  "opentelemetry",
