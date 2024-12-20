@@ -16,6 +16,7 @@ where
 {
     type Rejection = Redirect;
 
+    #[tracing::instrument(name = "AuthUser Extractor", skip(parts, _state))]
     async fn from_request_parts(parts: &mut Parts, _state: &S) -> Result<Self, Self::Rejection> {
         let auth_token = CookieJar::from_headers(&parts.headers)
             .get(AUTH_COOKIE)
