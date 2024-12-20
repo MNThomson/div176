@@ -1,6 +1,5 @@
 use std::any::Any;
 
-use auth::AuthUser;
 use axum::{
     Router,
     body::Body,
@@ -12,10 +11,11 @@ use axum::{
 use components::Layout;
 use db::{DB, Database};
 use hypertext::*;
-use r#static::static_handler;
 use telemetry::{otel_tracing, tracing_init};
 use tower_http::catch_panic::CatchPanicLayer;
 use tracing::{error, info};
+
+use crate::{auth::AuthUser, r#static::static_handler};
 
 mod auth;
 mod r#static;
