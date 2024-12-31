@@ -1,4 +1,3 @@
-#![feature(associated_type_defaults)]
 #![allow(async_fn_in_trait)]
 
 use std::{
@@ -29,7 +28,11 @@ const PATH: &str = "data.db";
 impl DB {
     pub async fn init() -> Result<Self> {
         #[cfg(debug_assertions)]
-        let _ = remove_file(PATH);
+        {
+            let _ = remove_file(PATH);
+            let _ = remove_file(format!("{}-shm", PATH));
+            let _ = remove_file(format!("{}-wal", PATH));
+        }
 
         File::open(PATH).or_else(|_| File::create(PATH)).unwrap();
         let db = DB {
