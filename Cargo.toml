@@ -2,6 +2,7 @@ cargo-features = ["codegen-backend", "profile-rustflags"]
 
 [workspace]
 default-members = ["div176"]
+exclude = ["crates/android"]
 members = ["crates/*", "div176"]
 resolver = "2"
 
