@@ -51,6 +51,7 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
+#[tracing::instrument(skip(user))]
 async fn protected(AuthUser(user): AuthUser) -> impl IntoResponse {
     user.session_token
 }
