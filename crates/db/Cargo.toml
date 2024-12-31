@@ -12,3 +12,6 @@ anyhow.workspace = true
 sqlx = { version = "0.8", features = ["chrono", "macros", "runtime-tokio", "sqlite"] }
 
 unreachable_macro = { path = "../unreachable_macro/" }
+
+[build-dependencies]
+rusqlite.version = "0.32.1"
