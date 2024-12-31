@@ -39,7 +39,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: "./.github/actions/setup-rust-env"
-      - uses: taiki-e/install-action@nextest
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-nextest@0.9.87
       - run: cargo nextest run --workspace
 
   build:
