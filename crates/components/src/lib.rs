@@ -4,7 +4,7 @@ use serde_json::json;
 
 pub fn Layout(inner: impl Renderable) -> impl Renderable {
     rsx! {
-        <!DOCTYPE html>
+        {Raw("<!DOCTYPE html>")}
         <html>
             <head>
                 <meta charset="UTF-8">
