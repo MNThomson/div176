@@ -21,6 +21,7 @@ tracing.workspace = true
 
 mime_guess.version = "2.0.5"
 rust-embed.version = "8.5.0"
+tower-livereload.version = "0.9.5"
 
 [dev-dependencies]
 pretty_assertions.workspace = true

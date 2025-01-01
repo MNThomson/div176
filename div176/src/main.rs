@@ -4,7 +4,7 @@ use axum::{
     Router,
     body::Body,
     extract::State,
-    http::{Response, StatusCode},
+    http::{Request, Response, StatusCode},
     response::IntoResponse,
     routing::get,
 };
@@ -34,7 +34,7 @@ async fn main() {
     };
 
     let app = Router::new()
-        .route("/", get(Layout(rsx!(<h1>div176</h1>)).render()))
+        .route("/", get(Layout(rsx!(<div>div176</div>)).render()))
         .route("/static/*file", get(static_handler))
         .route("/protected", get(protected))
         .layer(otel_tracing())
@@ -42,6 +42,12 @@ async fn main() {
         .route("/version", get(|| async { env!("GIT_HASH") }))
         .with_state(state)
         .layer(CatchPanicLayer::custom(handle_panic));
+
+    #[cfg(debug_assertions)]
+    let app = app.layer(
+        tower_livereload::LiveReloadLayer::new()
+            .request_predicate(|req: &Request<_>| !req.headers().contains_key("hx-request")),
+    );
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
