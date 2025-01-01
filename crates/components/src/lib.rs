@@ -40,6 +40,7 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
                 }).to_string()}</script>
             </head>
             <body class="flex flex-col h-screen bg-white">
+                {TopNav()}
                 <div class="flex flex-1 overflow-hidden">
                     <main class="text-black mobile:pt-4 mobile:px-5 desktop:pt-8 desktop:px-20 max-w-5xl w-full mx-auto">
                         { inner }
@@ -47,5 +48,22 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
                 </div>
             </body>
         </html>
+    }
+}
+
+pub fn TopNav() -> impl Renderable {
+    rsx! {
+        <nav class="z-50 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)]">
+            <div class="text-white bg-black flex">
+                <a href="/" class="flex">
+                    <img class="h-6 px-1" src="/static/img/logo.svg" />
+                    <p class="my-auto pr-3">Div176</p>
+                </a>
+                <div class="flex text-sm font-medium text-white space-x-0.5 *:px-3 *:py-1 *:my-auto hover:*:bg-green">
+                    <a href="#events" class="bg-green">Events</a>
+                    <a href="#hours " class="">Hours</a>
+                </div>
+            </div>
+        </nav>
     }
 }
