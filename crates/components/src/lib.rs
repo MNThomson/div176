@@ -39,8 +39,12 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
                     }
                 }).to_string()}</script>
             </head>
-            <body>
-                { inner }
+            <body class="flex flex-col h-screen bg-white">
+                <div class="flex flex-1 overflow-hidden">
+                    <main class="text-black mobile:pt-4 mobile:px-5 desktop:pt-8 desktop:px-20 max-w-5xl w-full mx-auto">
+                        { inner }
+                    </main>
+                </div>
             </body>
         </html>
     }
