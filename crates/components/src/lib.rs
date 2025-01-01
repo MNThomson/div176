@@ -1,9 +1,10 @@
 #![allow(non_snake_case)]
 use hypertext::*;
+use serde_json::json;
 
 pub fn Layout(inner: impl Renderable) -> impl Renderable {
     rsx! {
-        <!doctype html>
+        <!DOCTYPE html>
         <html>
             <head>
                 <meta charset="UTF-8">
@@ -12,7 +13,31 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
                 <link rel="icon" href="/static/img/favicon.svg">
                 <title>Div176</title>
                 <script src="https://cdn.tailwindcss.com/3.4.15"></script>
-                <script>r#"tailwind.config = {}"#</script>
+                <script>tailwind.config = {json!({
+                    "theme": {
+                        "screens": {
+                            "mobile": {"max": "639px"},
+                            "desktop": {"min": "640px"}
+                        },
+                        "colors": {
+                            "green": {
+                                "light": "#63C658",
+                                "DEFAULT": "#3F9C35",
+                                "dark": "#327A2A"
+                            },
+                            "yellow": "#CC9200",
+                            "red": "#D52B1E",
+                            "white": {
+                                "DEFAULT": "#F1FAF0",
+                                "true": "#FFFFFF"
+                            },
+                            "black": {
+                                "DEFAULT": "#252525",
+                                "true": "#000000"
+                            }
+                        }
+                    }
+                }).to_string()}</script>
             </head>
             <body>
                 { inner }

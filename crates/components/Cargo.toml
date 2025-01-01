@@ -9,3 +9,4 @@ version.workspace = true
 
 [dependencies]
 hypertext = { path = "../hypertext/" }
+serde_json.workspace = true
