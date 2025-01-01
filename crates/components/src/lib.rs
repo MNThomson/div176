@@ -1,6 +1,9 @@
 #![allow(non_snake_case)]
 use hypertext::*;
+use icons::{CalendarIcon, HomeIcon, HoursIcon, ProfileIcon};
 use serde_json::json;
+
+mod icons;
 
 pub fn Layout(inner: impl Renderable) -> impl Renderable {
     rsx! {
@@ -34,7 +37,8 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
                             "black": {
                                 "DEFAULT": "#252525",
                                 "true": "#000000"
-                            }
+                            },
+                            "neutral": "#a3a3a3",
                         }
                     }
                 }).to_string()}</script>
@@ -42,10 +46,11 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
             <body class="flex flex-col h-screen bg-white">
                 {TopNav()}
                 <div class="flex flex-1 overflow-hidden">
-                    <main class="text-black mobile:pt-4 mobile:px-5 desktop:pt-8 desktop:px-20 max-w-5xl w-full mx-auto">
+                    <main class="text-black pt-4 mobile:px-5 desktop:px-8 max-w-5xl w-full mx-auto">
                         { inner }
                     </main>
                 </div>
+                {BottomNav()}
             </body>
         </html>
     }
@@ -65,5 +70,32 @@ pub fn TopNav() -> impl Renderable {
                 </div>
             </div>
         </nav>
+    }
+}
+
+pub fn BottomNav() -> impl Renderable {
+    rsx! {
+            <nav class="desktop:hidden z-50 h-16 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)] rounded-t-xl grid grid-cols-5 text-sm space-x-0.5 text-neutral *:text-center *:content-center hover:*:text-yellow *:transition-all *:duration-200 *:flex *:flex-col *:justify-center *:items-center *:space-y-0.5 fill-neutral">
+                <a href="#">
+                    {CalendarIcon()}
+                    <p>...</p>
+                </a>
+                <a href="#" class="">
+                    {CalendarIcon()}
+                    <p>Events</p>
+                </a>
+                <a href="#" class="fill-green text-green font-medium">
+                    {HomeIcon()}
+                    <p>Home</p>
+                </a>
+                <a href="#" class="">
+                    {HoursIcon()}
+                    <p>Hours</p>
+                </a>
+                <a href="#" class="">
+                    {ProfileIcon()}
+                    <p>Account</p>
+                </a>
+            </nav>
     }
 }
