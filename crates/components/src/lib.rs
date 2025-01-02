@@ -1,4 +1,5 @@
 #![allow(non_snake_case)]
+
 use hypertext::*;
 use icons::{CalendarIcon, HomeIcon, HoursIcon, ProfileIcon};
 use serde_json::json;
@@ -45,11 +46,9 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
             </head>
             <body class="flex flex-col h-screen bg-white">
                 {TopNav()}
-                <div class="flex flex-1 overflow-hidden">
-                    <main class="text-black pt-4 mobile:px-5 desktop:px-8 max-w-5xl w-full mx-auto">
-                        { inner }
-                    </main>
-                </div>
+                <main class="overflow-scroll text-black py-4 mobile:px-5 desktop:px-8 max-w-5xl w-full mx-auto">
+                    { inner }
+                </main>
                 {BottomNav()}
             </body>
         </html>
@@ -59,14 +58,16 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
 pub fn TopNav() -> impl Renderable {
     rsx! {
         <nav class="z-50 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)]">
-            <div class="text-white bg-black flex">
-                <a href="/" class="flex">
-                    <img class="h-6 px-1" src="/static/img/logo.svg" />
-                    <p class="my-auto pr-3">Div176</p>
-                </a>
-                <div class="flex text-sm font-medium text-white space-x-0.5 *:px-3 *:py-1 *:my-auto hover:*:bg-green">
-                    <a href="#events" class="bg-green">Events</a>
-                    <a href="#hours " class="">Hours</a>
+            <div class="mobile:hidden text-white bg-black">
+                <div class="flex mx-auto max-w-5xl">
+                    <a href="/" class="flex items-center justify-center">
+                        <img class="h-6 px-1" src="/static/img/logo.svg" />
+                        <p class="my-auto pr-3">Div176</p>
+                    </a>
+                    <div class="flex font-medium text-white space-x-0.5 *:px-3 *:py-1 *:my-auto hover:*:bg-green">
+                        <a href="#events" class="bg-green">Events</a>
+                        <a href="#hours " class="">Hours</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -75,7 +76,7 @@ pub fn TopNav() -> impl Renderable {
 
 pub fn BottomNav() -> impl Renderable {
     rsx! {
-            <nav class="desktop:hidden z-50 h-16 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)] rounded-t-xl grid grid-cols-5 text-sm space-x-0.5 text-neutral *:text-center *:content-center hover:*:text-yellow *:transition-all *:duration-200 *:flex *:flex-col *:justify-center *:items-center *:space-y-0.5 fill-neutral">
+            <nav class="desktop:hidden z-50 h-16 px-1 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)] rounded-t-xl grid grid-cols-5 text-sm space-x-0.5 text-neutral *:text-center *:content-center hover:*:text-green hover:*:fill-green *:transition-all *:duration-200 *:flex *:flex-col *:justify-center *:items-center *:space-y-0.5 fill-neutral">
                 <a href="#">
                     {CalendarIcon()}
                     <p>...</p>
