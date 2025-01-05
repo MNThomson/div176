@@ -61,12 +61,13 @@ pub fn TopNav() -> impl Renderable {
             <div class="mobile:hidden text-white bg-black">
                 <div class="flex mx-auto max-w-5xl">
                     <a href="/" class="flex items-center justify-center">
-                        <img class="h-6 px-1" src="/static/img/logo.svg" />
+                        <img class="h-5 -translate-y-px pl-2 pr-1" src="/static/img/logo.svg" />
                         <p class="my-auto pr-3">Div176</p>
                     </a>
                     <div class="flex font-medium text-white space-x-0.5 *:px-3 *:py-1 *:my-auto hover:*:bg-green">
                         <a href="#events" class="bg-green">Events</a>
-                        <a href="#hours " class="">Hours</a>
+                        <a href="#hours" class="">Hours</a>
+                        <a href="#volunteers" class="">Volunteers</a>
                     </div>
                 </div>
             </div>
@@ -79,7 +80,7 @@ pub fn BottomNav() -> impl Renderable {
             <nav class="desktop:hidden z-50 h-16 px-1 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)] rounded-t-xl grid grid-cols-5 text-sm space-x-0.5 text-neutral *:text-center *:content-center hover:*:text-green hover:*:fill-green *:transition-all *:duration-200 *:flex *:flex-col *:justify-center *:items-center *:space-y-0.5 fill-neutral">
                 <a href="#">
                     {CalendarIcon()}
-                    <p>...</p>
+                    <p>Volunteers</p>
                 </a>
                 <a href="#" class="">
                     {CalendarIcon()}
