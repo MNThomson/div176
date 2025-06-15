@@ -1,5 +1,6 @@
 use std::any::Any;
 
+use auth::login_page;
 use axum::{
     Router,
     body::Body,
@@ -35,11 +36,16 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(Layout(rsx!(<div>div176</div>)).render()))
+        .route("/login", get(login_page))
         .route("/static/*file", get(static_handler))
         .route("/protected", get(protected))
         .layer(otel_tracing())
         .route("/health", get(healthcheck))
         .route("/version", get(|| async { env!("GIT_HASH") }))
+        .route(
+            "/robots.txt",
+            get(|| async { "User-agent: *\nAllow: /$\nDisallow: /" }),
+        )
         .with_state(state)
         .layer(CatchPanicLayer::custom(handle_panic));
 

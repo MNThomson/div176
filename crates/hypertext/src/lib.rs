@@ -1,6 +1,6 @@
 pub use hypertext::{
-    Attribute, GlobalAttributes, Raw, RenderIterator, Renderable, VoidElement, html_elements, rsx,
-    rsx_move, rsx_static,
+    Attribute, GlobalAttributes, Raw, RenderIterator, Renderable, Rendered, VoidElement,
+    html_elements, rsx, rsx_move, rsx_static,
 };
 
 pub trait HtmxAttributes: GlobalAttributes {

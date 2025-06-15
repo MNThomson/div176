@@ -17,6 +17,7 @@ version = "0.0.0"
 anyhow = { version = "1.0.92" }
 axum = { version = "0.7" }
 axum-extra = { version = "0.9", features = ["cookie"] }
+chrono = { version = "0.4.40" }
 pretty_assertions = "1.4.1"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1.0.33" }
