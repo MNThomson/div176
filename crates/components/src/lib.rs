@@ -57,9 +57,18 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
 
 pub fn TopNav() -> impl Renderable {
     rsx! {
-        <nav class="z-50 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)]">
-            <div class="mobile:hidden text-white bg-black">
-                <div class="flex mx-auto max-w-5xl">
+        <header class="mobile:hidden bg-green w-full">
+            <div class="desktop:px-1 flex h-full max-w-6xl mx-auto h-24">
+                <img class="h-20 p-1" src="/static/img/logo.svg" />
+                <div class="pl-5 pt-3 text-white">
+                    <h1 class="desktop:text-4xl mobile:text-2xl font-medium">St. John Ambulance</h1>
+                    <p class="text-[12px]">BC & Yukon Council, BGen David Coell Division 176, Victoria</p>
+                </div>
+            </div>
+        </header>
+        <nav class="z-50 bg-white shadow-[0px_5px_10px_2px_rgba(0,0,0,0.3)] sticky top-0">
+            <div class="mobile:hidden text-white bg-[linear-gradient(180deg,rgb(44,44,44)0%,rgb(44,44,44)50%,rgb(0,0,0)50%,rgb(0,0,0)100%)]">
+                <div class="flex mx-auto max-w-6xl">
                     <a href="/" class="flex items-center justify-center">
                         <img class="h-5 -translate-y-px pl-2 pr-1" src="/static/img/logo.svg" />
                         <p class="my-auto pr-3">Div176</p>
