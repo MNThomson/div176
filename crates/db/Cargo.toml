@@ -9,9 +9,6 @@ version.workspace = true
 
 [dependencies]
 anyhow.workspace = true
-sqlx = { version = "0.8", features = ["chrono", "macros", "runtime-tokio", "sqlite"] }
-
+postgresql_embedded = { features = ["bundled", "tokio"], version = "0.18.5" }
+sqlx = { features = ["chrono", "macros", "postgres", "runtime-tokio"], version = "0.8" }
 unreachable_macro = { path = "../unreachable_macro/" }
-
-[build-dependencies]
-rusqlite.version = "0.32.1"

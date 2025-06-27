@@ -1,15 +1,10 @@
 #![allow(async_fn_in_trait)]
 
-use std::{
-    fs::{File, remove_file},
-    time::Duration,
-};
+use std::time::Duration;
 
 use anyhow::{Context, Result, bail};
-use sqlx::{Sqlite, SqlitePool, sqlite::SqlitePoolOptions};
-
-pub type DbType = Sqlite;
-pub type DbPool = SqlitePool;
+use postgresql_embedded::PostgreSQL;
+use sqlx::{PgPool, postgres::PgPoolOptions};
 
 #[cfg_attr(test, unreachable_macro::with_unreachable_defaults)]
 pub trait Database {
@@ -18,28 +13,30 @@ pub trait Database {
 
 #[derive(Clone)]
 pub struct DB {
-    pool: DbPool,
+    pool: PgPool,
 }
 
 pub const INIT_SQL: &str = include_str!("../sql/init.sql");
 
-const PATH: &str = "data.db";
+pub async fn embedded_db() -> (String, PostgreSQL) {
+    let mut postgresql = PostgreSQL::default();
+    postgresql.setup().await.unwrap();
+    postgresql.start().await.unwrap();
+
+    let database_name = "sja";
+    postgresql.create_database(database_name).await.unwrap();
+    let settings = postgresql.settings();
+    let database_url = settings.url(database_name);
+    (database_url, postgresql)
+}
 
 impl DB {
-    pub async fn init() -> Result<Self> {
-        #[cfg(debug_assertions)]
-        {
-            let _ = remove_file(PATH);
-            let _ = remove_file(format!("{}-shm", PATH));
-            let _ = remove_file(format!("{}-wal", PATH));
-        }
-
-        File::open(PATH).or_else(|_| File::create(PATH)).unwrap();
+    pub async fn init(connection_string: &str) -> Result<Self> {
         let db = DB {
-            pool: SqlitePoolOptions::new()
+            pool: PgPoolOptions::new()
                 .max_connections(50)
                 .acquire_timeout(Duration::from_secs(3))
-                .connect(format!("sqlite://{}", PATH).as_str())
+                .connect(connection_string)
                 .await
                 .context("Could not connect to database (with URL)")?,
         };

@@ -10,9 +10,10 @@ use axum::{
     routing::get,
 };
 use components::Layout;
-use db::{DB, Database};
+use db::{DB, Database, embedded_db};
 use hypertext::*;
 use telemetry::{otel_tracing, tracing_init};
+use tokio::signal;
 use tower_http::catch_panic::CatchPanicLayer;
 use tracing::{error, info};
 
@@ -30,8 +31,10 @@ struct AppState {
 async fn main() {
     tracing_init(env!("CARGO_PKG_NAME"), env!("GIT_HASH"));
 
+    let (url, _pg) = embedded_db().await;
+
     let state = AppState {
-        db: DB::init().await.unwrap(),
+        db: DB::init(&url).await.unwrap(),
     };
 
     let app = Router::new()
@@ -60,7 +63,34 @@ async fn main() {
         .unwrap();
 
     info!("listening on {}", listener.local_addr().unwrap());
-    axum::serve(listener, app).await.unwrap();
+    axum::serve(listener, app)
+        .with_graceful_shutdown(shutdown_signal())
+        .await
+        .unwrap();
+}
+
+async fn shutdown_signal() {
+    let ctrl_c = async {
+        signal::ctrl_c()
+            .await
+            .expect("failed to install Ctrl+C handler");
+    };
+
+    #[cfg(unix)]
+    let terminate = async {
+        signal::unix::signal(signal::unix::SignalKind::terminate())
+            .expect("failed to install signal handler")
+            .recv()
+            .await;
+    };
+
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
+    tokio::select! {
+        _ = ctrl_c => {},
+        _ = terminate => {},
+    }
 }
 
 #[tracing::instrument(skip(user))]
