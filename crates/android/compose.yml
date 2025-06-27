@@ -1,0 +1,13 @@
+#!/usr/env -S docker compose -f
+services:
+  android_studio:
+    image: MNThomson/android-studio
+    build: .
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=:1
+    privileged: true
+    group_add: [plugdev]
+    network_mode: host
+    entrypoint: "sh -c 'whoami | sudo -S chmod 777 /dev/kvm && sleep infinity'"
