@@ -31,5 +31,6 @@ lto = "fat"
 
 [profile.dev-fast]
 codegen-backend = "cranelift"
+debug = false # debug = "line-tables-only"
 inherits = "dev"
 rustflags = ["-C", "link-arg=-fuse-ld=mold"]
