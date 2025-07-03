@@ -1154,8 +1154,6 @@ dependencies = [
 name = "hypertext"
 version = "0.0.0"
 dependencies = [
- "axum 0.7.9",
- "http 1.1.0",
  "hypertext 0.5.2",
  "pretty_assertions",
 ]
@@ -3536,7 +3534,6 @@ checksum = "f6ccf251212114b54433ec949fd6a7841275f9ada20dddd2f29e9ceea4501493"
 name = "unreachable_macro"
 version = "0.0.0"
 dependencies = [
- "proc-macro2",
  "quote",
  "syn 2.0.90",
 ]

@@ -13,9 +13,7 @@ crate-type = ["cdylib", "rlib", "staticlib"]
 name = "android_lib"
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build = { features = [], version = "2" }
 
 [dependencies]
-serde = { version = "1", features = ["derive"] }
-serde_json.version = "1.0.33"
 tauri = { version = "2" }

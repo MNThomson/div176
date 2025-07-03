@@ -11,6 +11,6 @@ fn main() {
         } else {
             String::from("")
         };
-        println!("cargo:rustc-env=GIT_HASH={}", git_hash);
+        println!("cargo:rustc-env=GIT_HASH={git_hash}");
     }
 }

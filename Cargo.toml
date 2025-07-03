@@ -16,14 +16,14 @@ version = "0.0.0"
 [workspace.dependencies]
 anyhow = { version = "1.0.92" }
 axum = { version = "0.7" }
-axum-extra = { version = "0.9", features = ["cookie"] }
+axum-extra = { features = ["cookie"], version = "0.9" }
 chrono = { version = "0.4.40" }
 pretty_assertions = "1.4.1"
-serde = { version = "1", features = ["derive"] }
+serde = { features = ["derive"], version = "1" }
 serde_json = { version = "1.0.33" }
-tokio = { version = "1.41", features = ["full"] }
-tower-http = { version = "0.6", features = ["catch-panic", "trace"] }
-tracing = { version = "0.1", features = ["attributes"] }
+tokio = { features = ["full"], version = "1.41" }
+tower-http = { features = ["catch-panic", "trace"], version = "0.6" }
+tracing = { features = ["attributes"], version = "0.1" }
 
 [profile.release]
 codegen-units = 1
