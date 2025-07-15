@@ -55,7 +55,8 @@ async fn main() {
     #[cfg(debug_assertions)]
     let app = app.layer(
         tower_livereload::LiveReloadLayer::new()
-            .request_predicate(|req: &Request<_>| !req.headers().contains_key("hx-request")),
+            .request_predicate(|req: &Request<_>| !req.headers().contains_key("hx-request"))
+            .reload_interval(std::time::Duration::from_millis(100)),
     );
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
