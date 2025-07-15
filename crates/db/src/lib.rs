@@ -2,13 +2,12 @@
 
 use std::time::Duration;
 
-use anyhow::{Context, Result, bail};
 use postgresql_embedded::PostgreSQL;
 use sqlx::{PgPool, postgres::PgPoolOptions};
 
 #[cfg_attr(test, unreachable_macro::with_unreachable_defaults)]
 pub trait Database {
-    async fn healthcheck(&self) -> Result<()>;
+    async fn healthcheck(&self) -> Result<(), ()>;
 }
 
 #[derive(Clone)]
@@ -31,15 +30,14 @@ pub async fn embedded_db() -> (String, PostgreSQL) {
 }
 
 impl DB {
-    pub async fn init(connection_string: &str) -> Result<Self> {
-        let db = DB {
-            pool: PgPoolOptions::new()
-                .max_connections(50)
-                .acquire_timeout(Duration::from_secs(3))
-                .connect(connection_string)
-                .await
-                .context("Could not connect to database (with URL)")?,
-        };
+    pub async fn init(connection_string: &str) -> Result<Self, sqlx::Error> {
+        let pool = PgPoolOptions::new()
+            .max_connections(50)
+            .acquire_timeout(Duration::from_secs(3))
+            .connect(connection_string)
+            .await?;
+
+        let db = DB { pool: pool.clone() };
 
         #[cfg(debug_assertions)]
         let _ = sqlx::query(INIT_SQL).execute(&db.pool).await;
@@ -49,15 +47,11 @@ impl DB {
 }
 
 impl Database for DB {
-    async fn healthcheck(&self) -> Result<()> {
+    async fn healthcheck(&self) -> Result<(), ()> {
         let row: (i64,) = sqlx::query_as("SELECT 1")
             .fetch_one(&self.pool)
             .await
             .unwrap_or((0,));
-        if row.0 == 1 {
-            Ok(())
-        } else {
-            bail!("not healthy")
-        }
+        if row.0 == 1 { Ok(()) } else { Err(()) }
     }
 }

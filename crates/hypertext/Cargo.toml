@@ -8,9 +8,7 @@ repository.workspace = true
 version.workspace = true
 
 [dependencies]
-axum.workspace = true
-http = "1.1"
-hypertext = { version = "0.5.2", features = ["axum"] }
+hypertext = { features = ["axum"], version = "0.5.2" }
 
 [dev-dependencies]
 pretty_assertions.workspace = true
