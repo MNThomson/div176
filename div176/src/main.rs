@@ -14,7 +14,7 @@ use db::{DB, Database, embedded_db};
 use hypertext::*;
 use telemetry::{otel_tracing, tracing_init};
 use tokio::signal;
-use tower_http::catch_panic::CatchPanicLayer;
+use tower_http::{catch_panic::CatchPanicLayer, compression::CompressionLayer};
 use tracing::{error, info};
 
 use crate::{auth::AuthUser, r#static::static_handler};
@@ -50,6 +50,7 @@ async fn main() {
             get(|| async { "User-agent: *\nAllow: /$\nDisallow: /" }),
         )
         .with_state(state)
+        .layer(CompressionLayer::new())
         .layer(CatchPanicLayer::custom(handle_panic));
 
     #[cfg(debug_assertions)]
