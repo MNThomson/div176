@@ -40,7 +40,16 @@ impl DB {
         let db = DB { pool: pool.clone() };
 
         #[cfg(debug_assertions)]
-        let _ = sqlx::query(INIT_SQL).execute(&db.pool).await;
+        {
+            sqlx::raw_sql("DROP SCHEMA public CASCADE; CREATE SCHEMA public; GRANT ALL ON SCHEMA public TO sja; GRANT ALL ON SCHEMA public TO public;")
+                .execute(&db.pool)
+                .await
+                .expect("to reset database");
+            sqlx::raw_sql(INIT_SQL)
+                .execute(&db.pool)
+                .await
+                .expect("to init db structure");
+        }
 
         Ok(db)
     }
