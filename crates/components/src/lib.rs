@@ -17,6 +17,7 @@ pub fn Layout(inner: impl Renderable) -> impl Renderable {
                 <link rel="icon" href="/static/img/favicon.svg">
                 <title>Div176</title>
                 <script src="https://cdn.tailwindcss.com/3.4.15"></script>
+                <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js"></script>
                 <script>tailwind.config = {json!({
                     "theme": {
                         "screens": {
