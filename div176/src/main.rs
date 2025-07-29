@@ -5,7 +5,7 @@ use axum::{
     Router,
     body::Body,
     extract::State,
-    http::{Request, Response, StatusCode},
+    http::{Response, StatusCode},
     response::IntoResponse,
     routing::get,
 };
@@ -49,16 +49,19 @@ async fn main() {
             "/robots.txt",
             get(|| async { "User-agent: *\nAllow: /$\nDisallow: /" }),
         )
-        .with_state(state)
-        .layer(CompressionLayer::new())
-        .layer(CatchPanicLayer::custom(handle_panic));
+        .fallback(fallback_404)
+        .with_state(state);
 
     #[cfg(debug_assertions)]
     let app = app.layer(
         tower_livereload::LiveReloadLayer::new()
-            .request_predicate(|req: &Request<_>| !req.headers().contains_key("hx-request"))
+            //.request_predicate(|req: &Request<_>| !req.headers().contains_key("hx-request"))
             .reload_interval(std::time::Duration::from_millis(100)),
     );
+
+    let app = app
+        .layer(CompressionLayer::new())
+        .layer(CatchPanicLayer::custom(handle_panic));
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3000")
         .await
@@ -69,6 +72,19 @@ async fn main() {
         .with_graceful_shutdown(shutdown_signal())
         .await
         .unwrap();
+}
+
+pub async fn fallback_404() -> impl IntoResponse {
+    (
+        StatusCode::NOT_FOUND,
+        Layout(rsx!(
+            <div class="items-center px-2 text-center mt-8">
+                <h1 class="text-8xl font-extrabold text-red">404</h1>
+                <h1 class="text-4xl font-extrabold text-red">Page Not Found</h1>
+                <p class="text-xl mt-4">"Oops. It seems like the page you're looking for does not exist"</p>
+                <p class="mt-2">"Have you checked the back of Dussault's Jeep?"</p>
+            </div>
+        )).render())
 }
 
 async fn shutdown_signal() {
