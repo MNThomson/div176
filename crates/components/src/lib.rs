@@ -132,3 +132,12 @@ pub fn BottomNav() -> impl Renderable {
             </nav>
     }
 }
+
+pub fn PageUnderConstruction() -> impl Renderable {
+    rsx! {
+        <div class="m-8 flex flex-col items-center justify-center">
+            <img class="h-96" src="/static/img/construction.svg" />
+            <h1 class="text-4xl font-extrabold text-green">Page under construction</h1>
+        </div>
+    }
+}

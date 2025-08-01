@@ -38,7 +38,7 @@ async fn main() {
     };
 
     let app = Router::new()
-        .route("/", get(Layout(rsx!(<div>div176</div>)).render()))
+        .route("/", get(Layout(PageUnderConstruction()).render()))
         .route("/login", get(login_page))
         .route("/static/*file", get(static_handler))
         .route("/protected", get(protected))
