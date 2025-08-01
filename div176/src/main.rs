@@ -82,7 +82,7 @@ pub async fn fallback_404() -> impl IntoResponse {
                 <h1 class="text-8xl font-extrabold text-red">404</h1>
                 <h1 class="text-4xl font-extrabold text-red">Page Not Found</h1>
                 <p class="text-xl mt-4">"Oops. It seems like the page you're looking for does not exist"</p>
-                <p class="mt-2">"Have you checked the back of Dussault's Jeep?"</p>
+                <p class="mt-2">"(Have you checked the back of Dussault's Jeep?)"</p>
             </div>
         )).render())
 }
