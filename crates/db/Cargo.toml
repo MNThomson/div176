@@ -10,5 +10,6 @@ version.workspace = true
 [dependencies]
 anyhow.workspace = true
 postgresql_embedded = { features = ["bundled", "tokio"], version = "0.18.5" }
-sqlx = { features = ["chrono", "macros", "postgres", "runtime-tokio"], version = "0.8" }
+sqlx.workspace = true
+types = { path = "../types/" }
 unreachable_macro = { path = "../unreachable_macro/" }

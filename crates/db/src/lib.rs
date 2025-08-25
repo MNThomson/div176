@@ -5,6 +5,9 @@ use std::time::Duration;
 use postgresql_embedded::PostgreSQL;
 use sqlx::{PgPool, postgres::PgPoolOptions};
 
+mod users;
+use crate::users::Users;
+
 #[cfg_attr(test, unreachable_macro::with_unreachable_defaults)]
 pub trait Database {
     async fn healthcheck(&self) -> Result<(), ()>;
@@ -13,8 +16,8 @@ pub trait Database {
 #[derive(Clone)]
 pub struct DB {
     pool: PgPool,
+    pub users: Users,
 }
-
 pub const INIT_SQL: &str = include_str!("../sql/init.sql");
 pub const DUMP_SQL: &str = include_str!("../sql/dump.sql");
 
@@ -38,7 +41,10 @@ impl DB {
             .connect(connection_string)
             .await?;
 
-        let db = DB { pool: pool.clone() };
+        let db = DB {
+            pool: pool.clone(),
+            users: Users::init(pool.clone()),
+        };
 
         #[cfg(debug_assertions)]
         {
