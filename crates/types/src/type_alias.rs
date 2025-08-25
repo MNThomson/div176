@@ -1,5 +1,5 @@
 #[macro_export]
-macro_rules! create_type_alias {
+macro_rules! type_alias {
     ($name:ident; String) => {
         #[derive(Debug)]
         struct $name(String);

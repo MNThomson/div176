@@ -1,7 +1,7 @@
-use type_alias_macro::create_type_alias;
+use types::type_alias;
 
-create_type_alias!(UserID; u64);
-create_type_alias!(AccountID; String);
+type_alias!(UserID; u64);
+type_alias!(AccountID; String);
 
 fn main() {
     let user_id: UserID = 42.into();
