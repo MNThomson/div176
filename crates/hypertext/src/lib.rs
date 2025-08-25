@@ -7,6 +7,10 @@ pub trait HtmxAttributes: GlobalAttributes {
     #![allow(non_upper_case_globals)]
     const hx_get: Attribute = Attribute;
     const hx_post: Attribute = Attribute;
+    const hx_target: Attribute = Attribute;
+    const hx_swap: Attribute = Attribute;
+    const hx_push_url: Attribute = Attribute;
+    const hx_boost: Attribute = Attribute;
 }
 
 impl<T: GlobalAttributes> HtmxAttributes for T {}
