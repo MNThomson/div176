@@ -16,6 +16,7 @@ pub struct DB {
 }
 
 pub const INIT_SQL: &str = include_str!("../sql/init.sql");
+pub const DUMP_SQL: &str = include_str!("../sql/dump.sql");
 
 pub async fn embedded_db() -> (String, PostgreSQL) {
     let mut postgresql = PostgreSQL::default();
@@ -45,10 +46,16 @@ impl DB {
                 .execute(&db.pool)
                 .await
                 .expect("to reset database");
+
             sqlx::raw_sql(INIT_SQL)
                 .execute(&db.pool)
                 .await
                 .expect("to init db structure");
+
+            sqlx::raw_sql(DUMP_SQL)
+                .execute(&db.pool)
+                .await
+                .expect("to seed db with data");
         }
 
         Ok(db)
