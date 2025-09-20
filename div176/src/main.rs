@@ -9,7 +9,7 @@ use axum::{
     response::IntoResponse,
     routing::get,
 };
-use components::Layout;
+use components::{Layout, PageUnderConstruction};
 use db::{DB, Database, embedded_db};
 use hypertext::*;
 use telemetry::{otel_tracing, tracing_init};
