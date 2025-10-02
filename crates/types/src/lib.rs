@@ -12,19 +12,19 @@ use tracing::error;
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
-    #[error("authentication required")]
+    #[error("Authentication required")]
     Unauthorized,
-    #[error("user may not perform that action")]
+    #[error("Forbidden from performing this action")]
     Forbidden,
-    #[error("request path not found")]
+    #[error("Page not found")]
     NotFound,
     #[error("error in the request body")]
     UnprocessableEntity {
         errors: HashMap<Cow<'static, str>, Vec<Cow<'static, str>>>,
     },
-    #[error("an error occurred with the database")]
+    #[error("Error occurred with the database")]
     Sqlx(#[from] sqlx::Error),
-    #[error("an internal server error occurred")]
+    #[error("Internal server error")]
     Anyhow(#[from] anyhow::Error),
 }
 
