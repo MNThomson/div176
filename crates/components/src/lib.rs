@@ -79,33 +79,35 @@ pub fn TopNav() -> impl Renderable {
                             <a href="#events" class="bg-green">Events</a>
                             <a href="#hours" class="">Hours</a>
                             <a href="#volunteers" class="">Volunteers</a>
+                            <a href="#reports" class="">Reports</a>
+                            <a href="#documents" class="">Documents</a>
+                            <a href="#map" class="">Map</a>
                         </div>
                     </div>
                     <div class="flex text-white space-x-0.5 *:px-3 *:py-1 *:my-auto hover:*:bg-green">
-                        <a href="/user" class="">Account</a>
+                        <a href="#user" class="">Account</a>
                     </div>
                 </div>
             </div>
         </nav>
         <script>{Raw("
-            document.addEventListener('scroll', function() {
+            function handleNavVisibility() {
                 const nav = document.querySelector('nav');
                 const navLogo = document.getElementById('navlogo');
 
-                if (nav) {
+                if (nav && navLogo) {
                     const navPosition = nav.getBoundingClientRect();
 
-                    navLogo.style.visibility = navPosition.top <= 0 ? 'visible' : 'hidden';
+                    if (navPosition.top <= 0) {
+                        navLogo.classList.remove('invisible');
+                    } else {
+                        navLogo.classList.add('invisible');
+                    }
                 }
-            });
+            }
+            handleNavVisibility();
 
-            // Initialize on page load
-            document.addEventListener('DOMContentLoaded', function() {
-                const navLogo = document.getElementById('navlogo');
-                if (navLogo) {
-                    navLogo.style.visibility = 'hidden';
-                }
-            });
+            document.addEventListener('scroll', handleNavVisibility);
         ")}</script>
     }
 }

@@ -5,8 +5,8 @@ use std::{borrow::Cow, collections::HashMap};
 use axum::{
     Json,
     body::Body,
-    http::{Response, StatusCode},
-    response::IntoResponse,
+    http::{HeaderName, Response, StatusCode},
+    response::{AppendHeaders, Html, IntoResponse},
 };
 use tracing::error;
 
@@ -67,6 +67,17 @@ impl IntoResponse for Error {
                 }
 
                 return (StatusCode::UNPROCESSABLE_ENTITY, Json(Errors { errors })).into_response();
+            }
+            Self::Unauthorized => {
+                return (
+                    self.status_code(),
+                    AppendHeaders([(
+                        HeaderName::from_static("hx-redirect"),
+                        String::from("/login"),
+                    )]),
+                    Html("<meta http-equiv='refresh' content='0; url=/login' />"),
+                )
+                    .into_response();
             }
             Self::Sqlx(ref e) => error!("SQLx error: {:?}", e),
             Self::Anyhow(ref e) => error!("Generic error: {:?}", e),

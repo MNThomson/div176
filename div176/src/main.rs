@@ -1,6 +1,5 @@
 use std::any::Any;
 
-use auth::login_page;
 use axum::{
     Router,
     body::Body,
@@ -9,7 +8,7 @@ use axum::{
     response::IntoResponse,
     routing::get,
 };
-use components::{Layout, PageUnderConstruction};
+use components::Layout;
 use db::{DB, Database, embedded_db};
 use hypertext::*;
 use telemetry::{otel_tracing, tracing_init};
@@ -20,6 +19,7 @@ use tracing::{error, info};
 use crate::{auth::AuthUser, r#static::static_handler};
 
 mod auth;
+mod home;
 mod r#static;
 
 #[derive(Clone)]
@@ -38,8 +38,8 @@ async fn main() {
     };
 
     let app = Router::new()
-        .route("/", get(Layout(PageUnderConstruction()).render()))
-        .route("/login", get(login_page))
+        .route("/", get(home::home))
+        .route("/login", get(auth::login_page).post(auth::login))
         .route("/static/*file", get(static_handler))
         .route("/protected", get(protected))
         .layer(otel_tracing())
@@ -111,9 +111,9 @@ async fn shutdown_signal() {
     }
 }
 
-#[tracing::instrument(skip(user))]
-async fn protected(AuthUser(user): AuthUser) -> impl IntoResponse {
-    user.session_token
+#[tracing::instrument(skip(ctx))]
+async fn protected(AuthUser(ctx): AuthUser) -> impl IntoResponse {
+    ctx.session_token
 }
 
 async fn healthcheck(State(state): State<AppState>) -> impl IntoResponse {

@@ -12,13 +12,19 @@ components = { path = "../crates/components/" }
 db = { path = "../crates/db/" }
 hypertext = { path = "../crates/hypertext/" }
 telemetry = { path = "../crates/telemetry/" }
+types = { path = "../crates/types//" }
 
+anyhow.workspace = true
 axum.workspace = true
 axum-extra.workspace = true
+rand.workspace = true
+serde.workspace = true
+serde_json.workspace = true
 tokio.workspace = true
 tower-http.workspace = true
 tracing.workspace = true
 
+argon2 = "0.5.3"
 mime_guess.version = "2.0.5"
 rust-embed.version = "8.5.0"
 tower-livereload.version = "0.9.5"
