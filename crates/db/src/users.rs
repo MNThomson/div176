@@ -37,4 +37,13 @@ impl Users {
 
         Ok(())
     }
+
+    pub async fn get_userid_from_session(&self, token: &str) -> Result<Option<i32>, Error> {
+        let result = sqlx::query!("SELECT uid FROM user_sessions WHERE token = $1", token)
+            .fetch_optional(&self.pool)
+            .await?
+            .map(|f| f.uid);
+
+        Ok(result)
+    }
 }

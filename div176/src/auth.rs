@@ -14,7 +14,7 @@ use components::Layout;
 use hypertext::*;
 use rand::{Rng, distr::Alphanumeric};
 use serde::{Deserialize, Serialize};
-use tracing::info_span;
+use tracing::{Instrument, info_span};
 use types::Error;
 
 use crate::AppState;
@@ -22,7 +22,7 @@ use crate::AppState;
 pub const AUTH_COOKIE: &str = "authorization";
 
 pub struct Ctx {
-    pub session_token: String,
+    pub user_id: i32,
     //pub user: User,
     //pub permissions,
 }
@@ -38,25 +38,28 @@ where
     type Rejection = Error;
 
     async fn from_request_parts(parts: &mut Parts, state: &S) -> Result<Self, Self::Rejection> {
-        let root_span = tracing::Span::current();
-        let _span = info_span!("AuthUser Extractor").entered();
+        let user_id = async move {
+            let auth_token = CookieJar::from_headers(&parts.headers)
+                .get(AUTH_COOKIE)
+                .ok_or(Error::Unauthorized)?
+                .value_trimmed()
+                .to_string();
 
-        let auth_token = CookieJar::from_headers(&parts.headers)
-            .get(AUTH_COOKIE)
-            .ok_or(Error::Unauthorized)?
-            .value_trimmed()
-            .to_string();
+            let db = AppState::from_ref(state).db;
 
-        let _db = AppState::from_ref(state).db;
-        println!("{}", &auth_token);
+            let user_id = db
+                .users
+                .get_userid_from_session(&auth_token)
+                .await?
+                .ok_or(Error::Unauthorized)?;
+            Ok::<i32, Error>(user_id)
+        }
+        .instrument(info_span!("AuthUser Extractor"))
+        .await?;
 
-        //db.get_current_user()
+        tracing::Span::current().record("user.id", user_id);
 
-        root_span.record("user.id", "testuser");
-
-        Ok(AuthUser(Ctx {
-            session_token: auth_token,
-        }))
+        Ok(AuthUser(Ctx { user_id }))
     }
 }
 

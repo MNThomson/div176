@@ -113,7 +113,7 @@ async fn shutdown_signal() {
 
 #[tracing::instrument(skip(ctx))]
 async fn protected(AuthUser(ctx): AuthUser) -> impl IntoResponse {
-    ctx.session_token
+    ctx.user_id.to_string()
 }
 
 async fn healthcheck(State(state): State<AppState>) -> impl IntoResponse {
