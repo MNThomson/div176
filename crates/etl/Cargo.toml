@@ -1,0 +1,13 @@
+[package]
+name = "etl"
+
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+version.workspace = true
+
+[dependencies]
+mysql = { version = "26.0" }
+tabled = { version = "0.20" }
+types = { path = "../types/" }
